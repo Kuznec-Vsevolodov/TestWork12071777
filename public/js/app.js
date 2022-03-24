@@ -2033,7 +2033,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -2340,7 +2339,8 @@ __webpack_require__.r(__webpack_exports__);
       course: 1,
       maxCreditLimit: 0,
       status: '',
-      url: ''
+      url: '',
+      button_text: ''
     };
   },
   props: ['type', 'student'],
@@ -2368,12 +2368,14 @@ __webpack_require__.r(__webpack_exports__);
     formTypeDetermine: function formTypeDetermine() {
       if (this.type == 'create') {
         this.url = '/students/create';
+        this.button_text = 'Add user';
       } else {
         this.firstName = this.student.first_name;
         this.lastName = this.student.last_name;
         this.course = this.student.course;
-        this.max_credit_limit = this.student.max_credit_limit;
+        this.maxCreditLimit = this.student.max_credit_limit;
         this.url = '/students/update/' + this.student.id;
+        this.button_text = 'Update user';
       }
     }
   }
@@ -38896,8 +38898,6 @@ var render = function () {
       1
     ),
     _vm._v(" "),
-    _c("a", { attrs: { href: "/lessons/" } }, [_vm._v("Watch lessons data")]),
-    _vm._v(" "),
     _c("a", { attrs: { href: "/" } }, [_vm._v("Back to students list")]),
     _vm._v(" "),
     _c("button", { on: { click: _vm.deleteStudent } }, [
@@ -39135,7 +39135,7 @@ var render = function () {
             expression: "title",
           },
         ],
-        attrs: { type: "text" },
+        attrs: { type: "text", placeholder: "Title" },
         domProps: { value: _vm.title },
         on: {
           input: function ($event) {
@@ -39156,7 +39156,7 @@ var render = function () {
             expression: "description",
           },
         ],
-        attrs: { type: "text" },
+        attrs: { type: "text", placeholder: "Description" },
         domProps: { value: _vm.description },
         on: {
           input: function ($event) {
@@ -39177,7 +39177,7 @@ var render = function () {
             expression: "credits",
           },
         ],
-        attrs: { type: "number" },
+        attrs: { type: "number", placeholder: "Credit quantity" },
         domProps: { value: _vm.credits },
         on: {
           input: function ($event) {
@@ -39232,7 +39232,7 @@ var render = function () {
             expression: "firstName",
           },
         ],
-        attrs: { type: "text" },
+        attrs: { type: "text", placeholder: "Name" },
         domProps: { value: _vm.firstName },
         on: {
           input: function ($event) {
@@ -39253,7 +39253,7 @@ var render = function () {
             expression: "lastName",
           },
         ],
-        attrs: { type: "text" },
+        attrs: { type: "text", placeholder: "Last name" },
         domProps: { value: _vm.lastName },
         on: {
           input: function ($event) {
@@ -39274,7 +39274,7 @@ var render = function () {
             expression: "course",
           },
         ],
-        attrs: { type: "number" },
+        attrs: { type: "number", placeholder: "Course" },
         domProps: { value: _vm.course },
         on: {
           input: function ($event) {
@@ -39295,7 +39295,7 @@ var render = function () {
             expression: "maxCreditLimit",
           },
         ],
-        attrs: { type: "number" },
+        attrs: { type: "number", placeholder: "Credit quantity" },
         domProps: { value: _vm.maxCreditLimit },
         on: {
           input: function ($event) {
@@ -39308,7 +39308,7 @@ var render = function () {
       }),
       _vm._v(" "),
       _c("button", { on: { click: _vm.sendCreationData } }, [
-        _vm._v("Add student"),
+        _vm._v(_vm._s(_vm.button_text)),
       ]),
     ]),
   ])

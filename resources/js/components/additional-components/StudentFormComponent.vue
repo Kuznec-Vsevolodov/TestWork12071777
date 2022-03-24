@@ -3,11 +3,11 @@
         <p>Student</p>
         <p>{{status}}</p>
         <div>
-            <input type="text" v-model="firstName">
-            <input type="text" v-model="lastName">
-            <input type="number" v-model="course">
-            <input type="number" v-model="maxCreditLimit">
-            <button @click="sendCreationData">Add student</button>
+            <input type="text" v-model="firstName" placeholder="Name">
+            <input type="text" v-model="lastName" placeholder="Last name">
+            <input type="number" v-model="course" placeholder="Course">
+            <input type="number" v-model="maxCreditLimit" placeholder="Credit quantity">
+            <button @click="sendCreationData">{{button_text}}</button>
         </div>
     </div>
 </template>
@@ -22,6 +22,7 @@
                 maxCreditLimit: 0,
                 status: '',
                 url: '',
+                button_text: '',
             }
         },
         props: ['type', 'student'],
@@ -47,13 +48,15 @@
             },
             formTypeDetermine(){
                 if(this.type == 'create'){
-                    this.url = '/students/create'
+                    this.url = '/students/create';
+                    this.button_text = 'Add user'
                 }else{
                     this.firstName = this.student.first_name;
                     this.lastName = this.student.last_name;
                     this.course = this.student.course;
-                    this.max_credit_limit = this.student.max_credit_limit;
+                    this.maxCreditLimit = this.student.max_credit_limit;
                     this.url = '/students/update/'+this.student.id;
+                    this.button_text = 'Update user'
                 }
             } 
         }

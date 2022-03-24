@@ -29,10 +29,8 @@ class StudentsController extends Controller
                 'course' => $request->input('course'),
                 'max_credit_limit' => $request->input('max_credit_limit'),
             ]);
-    
             return 'Created';
         }
-
         return 'Already exists';
     }
 
@@ -47,8 +45,8 @@ class StudentsController extends Controller
         $student = Student::where('id', $id)->first();
         $student->first_name = $request->input('first_name');
         $student->last_name = $request->input('last_name');
-        $student->course = $request->input('course');
         $student->max_credit_limit = $request->input('max_credit_limit');
+        $student->course = $request->input('course');
         $student->save();
 
         return 'Updated';
@@ -64,15 +62,21 @@ class StudentsController extends Controller
 
     public function addLessonToStudent(Request $request)
     {
-        $current_student = Student::where('id', $request->input('student_id'))->first();
-        
-        if($current_student->isLessonForAdding($request->input('lesson_id')) == 0){
+        $lesson_id = $request->input('lesson_id');
+        $student_id = $request->input('student_id');
+
+        $current_student = Student::where('id', $student_id)->first();
+
+        if($current_student->isLessonForAdding($lesson_id) == 0){
             $students_lessons_ids = $current_student->lessons()->pluck('lesson_id');
+
             $sum = Lesson::whereIn('id', $students_lessons_ids)->sum('credit_quantity');
+            $sum+=Lesson::where('id', $lesson_id)->sum('credit_quantity');
+            
             if($sum <= $current_student->max_credit_limit){
                 LessonStudent::create([
-                    'lesson_id' => $request->input('lesson_id'),
-                    'student_id' =>  $request->input('student_id'),
+                    'lesson_id' => $lesson_id,
+                    'student_id' =>  $student_id,
                 ]);
                 return 'Lesson Added';
             }
@@ -84,10 +88,13 @@ class StudentsController extends Controller
 
     public function deleteStudentLesson(Request $request)
     {
-        $current_student = Student::where('id', $request->input('student_id'))->first();
+        $lesson_id = $request->input('lesson_id');
+        $student_id = $request->input('student_id');
+
+        $current_student = Student::where('id', $student_id)->first();
         
-        if($current_student->isLessonForAdding($request->input('lesson_id')) > 0){
-            LessonStudent::where('lesson_id', $request->input('lesson_id'))->where('student_id', $request->input('student_id'))->delete();
+        if($current_student->isLessonForAdding($lesson_id) > 0){
+            LessonStudent::where('lesson_id', $lesson_id)->where('student_id', $student_id)->delete();
             return 'Deleted';
         }
         return 'There is not this lesson for such student';

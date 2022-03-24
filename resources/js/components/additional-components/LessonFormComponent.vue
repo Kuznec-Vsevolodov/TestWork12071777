@@ -3,9 +3,9 @@
         <p>Lesson</p>
         <p>{{status}}</p>
         <div>
-            <input type="text" v-model="title">
-            <input type="text" v-model="description">
-            <input type="number" v-model="credits">
+            <input type="text" v-model="title" placeholder="Title">
+            <input type="text" v-model="description" placeholder="Description">
+            <input type="number" v-model="credits" placeholder="Credit quantity">
             <button @click="sendCreationData">Send Data</button>
         </div>
     </div>

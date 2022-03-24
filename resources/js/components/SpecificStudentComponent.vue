@@ -5,7 +5,6 @@
             <add-lesson-to-student-component :student="student"></add-lesson-to-student-component>
             <students-lessons-component :student_id="student.id"></students-lessons-component>
         </div>
-        <a href="/lessons/">Watch lessons data</a>
         <a href="/">Back to students list</a>
         <button @click="deleteStudent">Delete Student</button>
     </div>
